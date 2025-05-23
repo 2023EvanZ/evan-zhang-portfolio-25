@@ -5,7 +5,6 @@ import Image from 'next/image'
 export default function Follow() {
   return (
     <section id="follow" className="relative h-screen flex justify-center overflow-hidden">
-      {/* Background image */}
       <div className="absolute inset-0 -z-10">
         <Image
           src="/Evan-Zhang-Picture.jpg"
@@ -17,9 +16,7 @@ export default function Follow() {
         <div className="absolute inset-0 bg-bg/80" />
       </div>
 
-      {/* Content wrapper: 80% width */}
       <div className="relative flex w-4/5 max-w-[80vw] mx-auto h-full">
-        {/* Left content (70%) */}
         <div className="w-7/12 flex flex-col justify-center pr-8">
           <h2 className="text-5xl lg:text-6xl font-bold mb-8 leading-tight text-fg">
             Growing<br/>
@@ -41,7 +38,6 @@ export default function Follow() {
           </div>
         </div>
 
-        {/* Right sidebar (30%) */}
         <aside className="hidden lg:flex flex-none w-5/12 flex-col justify-center pl-8 border-l border-fg/20">
           <h3 className="text-2xl font-semibold mb-4 text-fg">Growth</h3>
           <p className="text-sm leading-relaxed text-fg/70">

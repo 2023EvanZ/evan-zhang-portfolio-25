@@ -53,14 +53,12 @@ export default function Timeline() {
         <div className="relative before:absolute before:top-0 before:left-4 before:h-full before:w-px before:bg-fg/20">
           {timeline.map((item, i) => (
             <div key={i} className="relative mb-16 pl-12">
-              {/* Icon circle */}
               <div className="absolute left-0 top-1">
                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#1a1c20] ring-2 ring-accent">
                   {item.icon}
                 </div>
               </div>
 
-              {/* Card */}
               <div className="bg-[#1a1c20] p-6 rounded-md shadow-md">
                 <span className="text-sm text-fg/70">{item.period}</span>
                 <h3 className="mt-1 text-xl font-bold">{item.title}</h3>
