@@ -44,9 +44,9 @@ export default function Follow() {
             is something that takes time and needs to be consistent. I love pushing my limits and learning new concepts, especially when
             I can then turn around and implement those concepts into my life and work. I also care deeply about sharing the lessons I learned
             to inspire and guide the future generations so that their potential far exceeds mine -- essentially, my ceiling
-            should be their starting point. I do this by documentating my journey so that others can learn what worked and what didn't 
-            work for me. I'll do my best to consistently post, so make sure to follow me on Tik Tok 
-            and subscribe to my blog so you don't miss out on anything!
+            should be their starting point. I do this by documentating my journey so that others can learn what worked and what did not 
+            work for me. I will do my best to consistently post, so make sure to follow me on Tik Tok 
+            and subscribe to my blog so you do not miss out on anything!
           </p>
         </aside>
       </div>
