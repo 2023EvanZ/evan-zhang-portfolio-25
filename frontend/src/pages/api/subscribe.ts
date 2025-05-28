@@ -34,8 +34,13 @@ export default async function handler(
       .promise()
 
     return res.status(200).json({ success: true })
-  } catch (err: any) {
-    if (err.code === 'ConditionalCheckFailedException') {
+  } catch (err: unknown) {
+    if (
+      typeof err === 'object' &&
+      err !== null &&
+      'code' in err &&
+      (err as any).code === 'ConditionalCheckFailedException'
+    ) {
       return res.status(409).json({ error: 'Already subscribed' })
     }
     console.error('DynamoDB error', err)
