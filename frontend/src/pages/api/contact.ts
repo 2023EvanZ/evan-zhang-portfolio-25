@@ -1,4 +1,3 @@
-// pages/api/contact.ts
 import type { NextApiRequest, NextApiResponse } from 'next'
 import AWS from 'aws-sdk'
 
@@ -25,8 +24,6 @@ export default async function handler(
   }
 
   try {
-    // console.log('Source 2: Source email is', process.env.SES_SOURCE_EMAIL)
-    // console.log('Source 2: Contact email is', process.env.CONTACT_TO_EMAIL)
     await ses.sendEmail({
       Source: process.env.SES_SOURCE_EMAIL!,
       Destination: { ToAddresses: [process.env.CONTACT_TO_EMAIL!] },

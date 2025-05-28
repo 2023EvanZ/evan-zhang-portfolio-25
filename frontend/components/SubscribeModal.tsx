@@ -1,4 +1,3 @@
-// components/SubscribeModal.tsx
 'use client'
 import { useState, useEffect } from 'react'
 
@@ -12,7 +11,6 @@ export default function SubscribeModal({ isOpen, onClose }: SubscribeModalProps)
   const [status, setStatus] = useState<'idle'|'loading'|'success'|'error'>('idle')
 
   useEffect(() => {
-    // reset form/status whenever it opens
     if (isOpen) {
       setForm({ firstName: '', lastName: '', email: '' })
       setStatus('idle')

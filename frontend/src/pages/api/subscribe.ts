@@ -1,4 +1,3 @@
-// pages/api/subscribe.ts
 import type { NextApiRequest, NextApiResponse } from 'next'
 import AWS from 'aws-sdk'
 
@@ -39,7 +38,6 @@ export default async function handler(
 
     return res.status(200).json({ success: true })
   } catch (err) {
-    // err is unknown; narrow it before accessing .code
     console.error('DynamoDB error', err)
 
     if (

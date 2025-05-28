@@ -35,12 +35,6 @@ export default function Follow() {
             >
               Follow My Journey
             </a>
-            {/* <a
-              href="#"
-              className="border border-accent text-accent px-8 py-4 rounded-md font-medium hover:bg-accent/10 transition"
-            >
-              Subscribe to Blog
-            </a> */}
             <a
               href="#"
               onClick={e => { e.preventDefault(); setSubscribeOpen(true) }}

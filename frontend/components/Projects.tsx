@@ -1,4 +1,3 @@
-// components/ProjectCarousel.tsx
 'use client'
 
 import { useState } from 'react'
@@ -20,14 +19,14 @@ const projects: Project[] = [
     title: 'Go Loco',
     desc: 'GoLoco is a short-form content platform that promotes small business. Tourists can browse this app and see all the small businessses nearby and go there to support them.',
     img: '/projects/Go-Loco-Logo.png',
-    url: 'https://github.com/2023EvanZ/wics-sp2025'    // ← replace with your real link
+    url: 'https://github.com/2023EvanZ/wics-sp2025'
   },
   {
     id: 'kitchenware',
     title: 'Kitchenware',
     desc: 'Worked with a team in a semester to build out a full-stack project where users can request and loan kitchen items. Includes a in-app messaging system, real-time notification system, and a database.',
     img: '/projects/Kitchenware-logo.png',
-    url: 'https://github.com/2023EvanZ/swe-project-sp25'    // ← replace with your real link
+    url: 'https://github.com/2023EvanZ/swe-project-sp25'
 
   },
   {
@@ -35,7 +34,14 @@ const projects: Project[] = [
     title: 'CheckMate',
     desc: 'Created a google chrome extension that verifies any information on a website the user is own. Worked with a team to build out a full RAG model in the backend with queries to Perplexity AI.',
     img: '/projects/CheckMate.png',
-    url: 'https://github.com/allenh99/checkMate'    // ← replace with your real link
+    url: 'https://github.com/allenh99/checkMate'
+  },
+  {
+    id: 'portfolio',
+    title: 'Portfolio Website',
+    desc: 'Built personal portfolio website using Typescript and Next.js for the frontend and AWS services for backend. Uses Amazon SES to send emails from website to myself and DynamoDB to store subscriber emails.',
+    img: '/projects/Portfolio-logo.png',
+    url: 'https://github.com/2023EvanZ/evan-zhang-portfolio-25'
   },
 ]
 
@@ -74,7 +80,6 @@ export default function ProjectCarousel() {
           My Featured Projects
         </h2>
         <div className="relative flex items-center justify-center w-full max-w-3xl">
-          {/* Prev */}
           <button
             onClick={() => paginate(-1)}
             className="absolute left-0 text-fg/60 hover:text-fg p-3 text-4xl"
@@ -83,7 +88,6 @@ export default function ProjectCarousel() {
             ‹
           </button>
 
-          {/* AnimatePresence for one slide */}
           <AnimatePresence initial={false} custom={direction}>
             <motion.div
               key={project.id}
@@ -95,7 +99,6 @@ export default function ProjectCarousel() {
               transition={{ duration: 0.8, ease: 'easeInOut' }}
               className="w-full max-w-lg h-[50vh] flex flex-col items-center gap-4 pt-6"
             >
-              {/* Clickable image */}
               <Link href={project.url} className="block">
                 <Image
                   src={project.img}
@@ -106,7 +109,6 @@ export default function ProjectCarousel() {
                 />
               </Link>
 
-              {/* Title and description */}
               <h3 className="text-2xl md:text-3xl font-bold text-center">
                 <Link href={project.url} className="hover:text-accent transition">
                   {project.title}
@@ -118,7 +120,6 @@ export default function ProjectCarousel() {
             </motion.div>
           </AnimatePresence>
 
-          {/* Next */}
           <button
             onClick={() => paginate(1)}
             className="absolute right-0 text-fg/60 hover:text-fg p-3 text-4xl"
