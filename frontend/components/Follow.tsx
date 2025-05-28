@@ -2,7 +2,13 @@
 
 import Image from 'next/image'
 
+import { useState } from 'react'
+import SubscribeModal from './SubscribeModal'
+
 export default function Follow() {
+
+  const [isSubscribeOpen, setSubscribeOpen] = useState(false)
+
   return (
     <section id="follow" className="relative h-screen flex justify-center overflow-hidden">
       <div className="absolute inset-0 -z-10">
@@ -29,12 +35,24 @@ export default function Follow() {
             >
               Follow My Journey
             </a>
-            <a
+            {/* <a
               href="#"
               className="border border-accent text-accent px-8 py-4 rounded-md font-medium hover:bg-accent/10 transition"
             >
               Subscribe to Blog
+            </a> */}
+            <a
+              href="#"
+              onClick={e => { e.preventDefault(); setSubscribeOpen(true) }}
+              className="border border-accent text-accent px-8 py-4 rounded-md font-medium hover:bg-accent/10 transition"
+            >
+              Subscribe to Blog
             </a>
+
+            <SubscribeModal
+              isOpen={isSubscribeOpen}
+              onClose={() => setSubscribeOpen(false)}
+            />
           </div>
         </div>
 
