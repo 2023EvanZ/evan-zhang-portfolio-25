@@ -1,3 +1,4 @@
+// pages/api/subscribe.ts
 import type { NextApiRequest, NextApiResponse } from 'next'
 import AWS from 'aws-sdk'
 
@@ -8,13 +9,16 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.method !== 'POST') return res.status(405).end()
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' })
+  }
 
   const { firstName, lastName, email } = req.body as {
     firstName?: string
     lastName?: string
     email?: string
   }
+
   if (!firstName || !lastName || !email) {
     return res.status(400).json({ error: 'All fields required' })
   }
@@ -34,16 +38,19 @@ export default async function handler(
       .promise()
 
     return res.status(200).json({ success: true })
-  } catch (err: unknown) {
+  } catch (err) {
+    // err is unknown; narrow it before accessing .code
+    console.error('DynamoDB error', err)
+
     if (
       typeof err === 'object' &&
       err !== null &&
       'code' in err &&
-      (err as any).code === 'ConditionalCheckFailedException'
+      (err as Record<string, unknown>).code === 'ConditionalCheckFailedException'
     ) {
       return res.status(409).json({ error: 'Already subscribed' })
     }
-    console.error('DynamoDB error', err)
+
     return res.status(500).json({ error: 'Could not subscribe' })
   }
 }
