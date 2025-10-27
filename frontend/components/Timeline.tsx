@@ -10,6 +10,17 @@ interface TimelineItem {
 }
 
 const timeline: TimelineItem[] = [
+    {
+    period: 'Jun 2025 – Aug 2025',
+    title: 'Software Engineer Intern',
+    subtitle: 'GEICO',
+    points: [
+      'Developed reusable end-to-end web components with Lit, building GEICO\'s digital brand by maintaining and authoring Storybook documentation.',
+      'Active member of our team\'s submission for an internal AI hackathon event, leading the data collection, model output, and the live demo.',
+      'Triaged and resolved bugs from prior UI releases, collaborating with Designers and Product Managers to expedite fixes, and participated in daily code reviews with other developers.'
+    ],
+    icon: <Calendar size={20} className="text-accent" />
+  },
   {
     period: 'Jun 2024 – Aug 2024',
     title: 'Assistant Lead Developer',

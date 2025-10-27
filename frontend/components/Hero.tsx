@@ -7,7 +7,7 @@ const info = [
     id: 'education',
     label: 'Education',
     desc:
-      `As previously stated, I am currently a CS student at the University of Virginia (UVA). I also graduated from 
+      `As previously stated, I am currently a CS and STATs student at the University of Virginia (UVA). I also graduated from 
       Thomas Jefferson High School for Science. In freshmen year of high school I became obsessed with the 
       problem-solving nature of computer science, and since then have pursued numerous courses to build upon that curiosity.
       I have taken courses in Data Structure and Algorithms, Computer System and Organizations, Discrete Math Theroy, Software Development Essentials,
@@ -56,7 +56,7 @@ export default function Hero() {
               Hi, I’m <br /> Evan Zhang
             </h1>
             <p className="max-w-md">
-              I’m a computer science student at the University of Virginia!
+              I’m a computer science and applied statistics student at the University of Virginia!
             </p>
             <button
               onClick={() => document.getElementById('follow')?.scrollIntoView({ behavior: 'smooth' })}
