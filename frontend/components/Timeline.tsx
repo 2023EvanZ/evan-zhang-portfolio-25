@@ -1,89 +1,42 @@
-import { ReactNode } from 'react'
-import { Calendar } from 'lucide-react' 
-
-interface TimelineItem {
-  period: string
-  title: string
-  subtitle?: string
-  points: string[]
-  icon?: ReactNode
-}
-
-const timeline: TimelineItem[] = [
-    {
-    period: 'Jun 2025 – Aug 2025',
-    title: 'Software Engineer Intern',
-    subtitle: 'GEICO',
-    points: [
-      'Developed reusable end-to-end web components with Lit, building GEICO\'s digital brand by maintaining and authoring Storybook documentation.',
-      'Active member of our team\'s submission for an internal AI hackathon event, leading the data collection, model output, and the live demo.',
-      'Triaged and resolved bugs from prior UI releases, collaborating with Designers and Product Managers to expedite fixes, and participated in daily code reviews with other developers.'
-    ],
-    icon: <Calendar size={20} className="text-accent" />
-  },
-  {
-    period: 'Jun 2024 – Aug 2024',
-    title: 'Assistant Lead Developer',
-    subtitle: 'Pangu - Startup',
-    points: [
-      'Team of 5 created a start-up e-commerce website for college students under the supervision of a current Software Engineer.',
-      'Implemented 10+ frontend features with React and Tailwind. Built 5+ backend features with robust APIs with Express for secure authentication and used Supabase for database.',
-      'Built and executed numerous unit tests and end-to-end tests ensuring sufficient code coverage.'
-    ],
-    icon: <Calendar size={20} className="text-accent" />
-  },
-  {
-    period: 'May 2024 – Aug 2024',
-    title: 'Lead Instructor',
-    subtitle: 'Fairfax Collegiate',
-    points: [
-      'Taught over 50 middle-school students of various skill levels and taught them to program complex algorithms and games in Python.',
-      'Created 80 lectures with custom activities for student learning and handled communication with parents.',
-      'Substituted for other classes and monitored students during break time to ensure their safety.'
-    ],
-    icon: <Calendar size={20} className="text-accent" />
-  },
-  {
-    period: 'Jun 2023 – Aug 2023',
-    title: 'Teacher Assistant',
-    subtitle: 'Fairfax Collegiate',
-    points: [
-      'Assisted with teacher lectures by ensuring no mistakes were made, often gave impromptu ones to students struggling with concepts.',
-      'Worked individually with students to help debug their programs and offer more in-depth and personalized lessons.',
-      'Responsible for teaching students various sorting algorithmns, data structures, boolean logic, and game design.'
-    ],
-    icon: <Calendar size={20} className="text-accent" />
-  },
-]
+import { timeline } from './siteData'
 
 export default function Timeline() {
   return (
-    <section id="timeline" className="py-24 bg-bg text-fg">
-      <div className="container mx-auto px-6 max-w-3xl">
-        <h2 className="text-3xl font-semibold mb-12 text-center">My Journey</h2>
-        <div className="relative before:absolute before:top-0 before:left-4 before:h-full before:w-px before:bg-fg/20">
-          {timeline.map((item, i) => (
-            <div key={i} className="relative mb-16 pl-12">
-              <div className="absolute left-0 top-1">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#1a1c20] ring-2 ring-accent">
-                  {item.icon}
+    <section id="timeline" className="px-6 pb-20 md:px-16 md:pb-[110px] lg:px-24">
+      <div className="mx-auto max-w-[1120px]">
+        <div className="grid gap-10 md:grid-cols-[200px_1fr] md:gap-16">
+          <div className="font-mono text-[12px] font-medium uppercase leading-[1.6] tracking-[.2em] text-accent">
+            Where I&rsquo;ve been
+          </div>
+
+          <div className="grid gap-px bg-white/[.09]">
+            {timeline.map((item) => (
+              <div
+                key={`${item.title}-${item.period}`}
+                className="grid gap-6 bg-bg py-[34px] md:grid-cols-[1fr_240px] md:gap-10"
+              >
+                <div>
+                  <div className="font-serif text-[24px] font-normal text-white md:text-[26px]">
+                    {item.title}
+                  </div>
+                  <div className="mt-1 text-[15px] text-fg/60">{item.subtitle}</div>
+                  <ul className="mt-4 max-w-[560px] space-y-2">
+                    {item.points.map((pt, j) => (
+                      <li
+                        key={j}
+                        className="relative pl-5 text-[15px] leading-[1.7] text-fg/[.62] text-pretty before:absolute before:left-0 before:top-[10px] before:h-[3px] before:w-[3px] before:rounded-full before:bg-accent"
+                      >
+                        {pt}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="font-mono text-[12px] leading-[2] text-accent">
+                  {item.period}
                 </div>
               </div>
-
-              <div className="bg-[#1a1c20] p-6 rounded-md shadow-md">
-                <span className="text-sm text-fg/70">{item.period}</span>
-                <h3 className="mt-1 text-xl font-bold">{item.title}</h3>
-                {item.subtitle && (
-                  <p className="text-accent mb-4">{item.subtitle}</p>
-                )}
-                <ul className="list-disc list-inside space-y-2 text-sm leading-relaxed">
-                  {item.points.map((pt, j) => (
-                    <li key={j}>{pt}</li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>

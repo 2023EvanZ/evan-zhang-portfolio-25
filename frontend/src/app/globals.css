@@ -1,26 +1,35 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/*
+  Deep End palette — direction 1a from the Portfolio Library design.
+  These are the tokens the components have always referenced (bg-bg, text-fg,
+  text-accent); before this they were never defined, so the classes were no-ops.
+*/
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: #05121c;
+  --color-bg-2: #071b28;
+  --color-fg: #e7f2f8;
+  --color-accent: #5fa9c9;
+  --color-accent-bright: #8fd0e8;
+
+  --font-sans: var(--font-archivo);
+  --font-serif: var(--font-newsreader);
+  --font-mono: var(--font-jetbrains);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  background: var(--color-bg);
+  color-scheme: dark;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-bg);
 }
