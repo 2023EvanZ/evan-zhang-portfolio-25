@@ -22,8 +22,11 @@ const LANE_COLORS = [0xffffff, 0x1e6fd9, 0xffffff, 0xe4552f, 0xffffff]
 export default function PoolWorld({ milestones }: { milestones: Milestone[] }) {
   const hostRef = useRef<HTMLDivElement>(null)
   const knobRef = useRef<HTMLDivElement>(null)
-  const [active, setActive] = useState<Milestone | null>(null)
-  const [swum, setSwum] = useState(false)
+  const hintRef = useRef<HTMLDivElement>(null)
+  const panelRef = useRef<HTMLDivElement>(null)
+  const yearRef = useRef<HTMLDivElement>(null)
+  const titleRef = useRef<HTMLDivElement>(null)
+  const bodyRef = useRef<HTMLDivElement>(null)
   const [failed, setFailed] = useState(false)
 
   useEffect(() => {
@@ -291,6 +294,31 @@ export default function PoolWorld({ milestones }: { milestones: Milestone[] }) {
 
       /* ---------- interaction ---------- */
 
+      /*
+        The panel and hint are written straight to the DOM rather than held in
+        React state. The render loop can change the surfaced marker on any
+        frame, and routing that through setState re-renders this component
+        (which owns an imperatively-appended canvas) fast enough to lock up the
+        renderer. This is how the original pool-world.js did it too.
+      */
+      const showMilestone = (m: Milestone | null) => {
+        const panel = panelRef.current
+        if (!panel) return
+        if (m) {
+          if (yearRef.current) yearRef.current.textContent = m.year
+          if (titleRef.current) titleRef.current.textContent = m.title
+          if (bodyRef.current) bodyRef.current.textContent = m.body
+          panel.style.opacity = '1'
+          panel.style.transform = 'translateY(0)'
+        } else {
+          panel.style.opacity = '0'
+          panel.style.transform = 'translateY(12px)'
+        }
+      }
+      const hideHint = () => {
+        if (hintRef.current) hintRef.current.style.opacity = '0'
+      }
+
       const raycaster = new THREE.Raycaster()
       const pointer = new THREE.Vector2(-2, -2)
       const maxZ = (markers.length - 1) * 16 + 14
@@ -298,6 +326,7 @@ export default function PoolWorld({ milestones }: { milestones: Milestone[] }) {
       let target = 0
       let mx = 0
       let my = 0
+      let shownIndex = -1
 
       const ro = new ResizeObserver(() => {
         const cw = host.clientWidth
@@ -317,7 +346,7 @@ export default function PoolWorld({ milestones }: { milestones: Milestone[] }) {
         // otherwise let the page scroll on past the hero.
         if (next > 0 && next < 1) e.preventDefault()
         target = Math.max(0, Math.min(1, next))
-        setSwum(true)
+        hideHint()
       }
       host.addEventListener('wheel', onWheel, { passive: false })
 
@@ -331,9 +360,7 @@ export default function PoolWorld({ milestones }: { milestones: Milestone[] }) {
         if (hits.length) {
           let o: import('three').Object3D | null = hits[0].object
           while (o && !(o.userData as MarkerData)?.data) o = o.parent
-          if (o) setActive((o.userData as MarkerData).data)
-        } else {
-          setActive(null)
+          if (o) showMilestone((o.userData as MarkerData).data)
         }
       }
 
@@ -354,7 +381,7 @@ export default function PoolWorld({ milestones }: { milestones: Milestone[] }) {
           lastY = e.clientY
           moved += Math.abs(d)
           target = Math.max(0, Math.min(1, target + d * 0.0016))
-          setSwum(true)
+          hideHint()
         }
       }
       const onPointerUp = (e: PointerEvent) => {
@@ -396,6 +423,33 @@ export default function PoolWorld({ milestones }: { milestones: Milestone[] }) {
 
         const z = 6 - progress * maxZ
         camera.position.z = z
+
+        /*
+          Surface whichever marker the camera is currently alongside, so the
+          detail panel reads itself as you swim rather than needing a click.
+          Markers sit 16 units apart, so a range of 9 covers the gaps between
+          them: once you are into the run the panel stays up and swaps from one
+          entry to the next as you pass each marker, rather than blinking out in
+          between. It stays hidden at the very start so the headline lands on
+          clean water. The panel only writes when the marker actually changes —
+          this runs every frame.
+        */
+        const REVEAL_RANGE = 9
+        let nearest = -1
+        let nearestDist = Infinity
+        for (let i = 0; i < markers.length; i++) {
+          const d = Math.abs(markers[i].position.z - z)
+          if (d < nearestDist) {
+            nearestDist = d
+            nearest = i
+          }
+        }
+        const next = nearestDist <= REVEAL_RANGE ? nearest : -1
+        if (next !== shownIndex) {
+          shownIndex = next
+          showMilestone(next === -1 ? null : milestones[next])
+          if (next !== -1) hideHint()
+        }
         camera.position.x += (mx * 2.2 - camera.position.x) * 0.05
         camera.position.y +=
           (2.4 - my * 1.2 + Math.sin(time * 0.9) * 0.12 - camera.position.y) * 0.05
@@ -500,27 +554,22 @@ export default function PoolWorld({ milestones }: { milestones: Milestone[] }) {
       {!failed && (
         <>
           <div
-            className={`pointer-events-none absolute bottom-[22px] left-1/2 -translate-x-1/2 font-mono text-[12px] leading-none uppercase tracking-[.16em] text-white/70 transition-opacity duration-500 ${
-              swum ? 'opacity-0' : 'opacity-100'
-            }`}
+            ref={hintRef}
+            className="pointer-events-none absolute bottom-[22px] left-1/2 -translate-x-1/2 font-mono text-[12px] leading-none uppercase tracking-[.16em] text-white/70 transition-opacity duration-500"
           >
-            scroll or drag to swim · click a marker
+            scroll or drag to swim down the lane
           </div>
 
           <div
-            className={`pointer-events-none absolute bottom-8 left-8 max-w-[380px] border border-white/20 bg-[#041624]/85 px-[26px] pt-6 pb-[26px] text-[#eaf6fb] backdrop-blur-[14px] transition-all duration-300 ${
-              active ? 'translate-y-0 opacity-100' : 'translate-y-3 opacity-0'
-            }`}
+            ref={panelRef}
+            className="pointer-events-none absolute bottom-8 left-8 max-w-[380px] translate-y-3 border border-white/20 bg-[#041624]/85 px-[26px] pt-6 pb-[26px] text-[#eaf6fb] opacity-0 backdrop-blur-[14px] transition-all duration-300"
           >
-            <div className="font-mono text-[12px] font-medium leading-none tracking-[.2em] text-[#7fd0ee]">
-              {active?.year}
-            </div>
-            <div className="mt-[10px] font-serif text-[22px] leading-[1.25]">
-              {active?.title}
-            </div>
-            <div className="mt-3 text-[14px] leading-[1.6] text-[#eaf6fb]/80">
-              {active?.body}
-            </div>
+            <div
+              ref={yearRef}
+              className="font-mono text-[12px] font-medium leading-none tracking-[.2em] text-[#7fd0ee]"
+            />
+            <div ref={titleRef} className="mt-[10px] font-serif text-[22px] leading-[1.25]" />
+            <div ref={bodyRef} className="mt-3 text-[14px] leading-[1.6] text-[#eaf6fb]/80" />
           </div>
 
           <div className="absolute right-[26px] top-[26px] bottom-[26px] w-[2px] bg-white/15">
