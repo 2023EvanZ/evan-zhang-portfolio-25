@@ -1,102 +1,49 @@
 'use client'
 
-import { useState } from 'react'
+import dynamic from 'next/dynamic'
+import { milestones } from './siteData'
 
-const info = [
-  {
-    id: 'education',
-    label: 'Education',
-    desc:
-      `As previously stated, I am currently a CS student at the University of Virginia (UVA). I also graduated from 
-      Thomas Jefferson High School for Science. In freshmen year of high school I became obsessed with the 
-      problem-solving nature of computer science, and since then have pursued numerous courses to build upon that curiosity.
-      I have taken courses in Data Structure and Algorithms, Computer System and Organizations, Discrete Math Theroy, Software Development Essentials,
-      Software Engineering, Artificial Intelligence, Multivariable Calculus, Linear Algebra, and Probability. This upcoming year I plan to take 
-      courses in Databases, Cloud Computing, Natural Language Processing, Machine Learning, and Data Analysis with Python.  
-      Combined, I have over half a decade of experience in programming.`,
-  },
-{
-    id: 'skills',
-    label: 'Skills',
-    desc:
-      `I am proficent in several programming languages, including Java, Python, JavaScript, R, C/C++, SQL, and TypeScript. Specifically, I have 
-      extensive experience with technologies such as React.js, React Native, Angular, Django, Flask, MongoDB, Next.js, TensorFlow, Android SDK, 
-      iOS SDK, Bootstrap, and Tailwind. Furthermore, I have studied concepts like Operating Systems, Artificial Intelligence, Machine Learning, 
-      Restful APIs, Cloud, Software Development, Databases, UI/UX Design, and Web-scraping. In terms of soft skills, I am excellent at communicating,
-      problem solving, critical thinking, and have displayed leadership countless times throughout my life.`,
-  },
-  {
-    id: 'hobbies',
-    label: 'Hobbies',
-    desc:
-      `When I am not stuyding for school, I love to develop new programs and applications that involve new, cutting-edge technology and makes
-      a positive benefit on the users' lives. Besides programming, I also am an avid runner and reader -- I love reading self-improvement books,
-      which reflects my desire to grow stronger and more knowledgeable everyday. Additionally, I like to swim or play volleyball with friends. 
-      Whenever possible, I enjoy traveling the world and digesting new, immersive experiences. I especially delight in trips where the nature
-      is simply stunning!`,
-  },
+// WebGL only ever runs in the browser; keep three.js out of the server render.
+const PoolWorld = dynamic(() => import('./PoolWorld'), { ssr: false })
+
+const nav = [
+  { label: 'Work', href: '#timeline' },
+  { label: 'About', href: '#about' },
+  { label: 'Projects', href: '#projects' },
+  { label: 'Contact', href: '#contact' },
 ]
 
 export default function Hero() {
-  const [activeId, setActiveId] = useState(info[0].id)
-
   return (
-    <section id="home" className="text-fg">
-      <div
-        className="
-          relative h-[50vh] sm:h-[60vh] md:h-[70vh]
-          bg-[url('/Evan-Zhang-Hero.jpg')] bg-center bg-cover
-        "
-      >
-        <div className="absolute inset-0 bg-black/60 z-10" />
+    <section id="home" className="relative h-[560px] md:h-[720px] bg-[#062033]">
+      <PoolWorld milestones={milestones} />
 
-        <div className="relative z-20 container mx-auto px-6 h-full flex items-center">
-          <div className="space-y-6 text-center md:text-left max-w-xl">
-            <h1 className="text-5xl md:text-6xl font-bold leading-tight">
-              Hi, I’m <br /> Evan Zhang
-            </h1>
-            <p className="max-w-md">
-              I’m a computer science student at the University of Virginia!
-            </p>
-            <button
-              onClick={() => document.getElementById('follow')?.scrollIntoView({ behavior: 'smooth' })}
-              className="
-                mt-4 px-6 py-3 rounded-md font-medium transition-colors duration-200
-                bg-accent text-bg
-                hover:bg-purple-600
-              "
-            >
-              More →
-            </button>
-          </div>
+      {/* Scrim: the nearest lane marker drifts behind the headline, and the pool
+          floor is bright enough that text-shadow alone does not carry the copy. */}
+      <div className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-b from-[#041624]/90 via-[#041624]/60 to-[#041624]/10 md:inset-y-0 md:left-0 md:w-3/5 md:bg-gradient-to-r md:from-[#041624]/85 md:via-[#041624]/35 md:to-transparent" />
+
+      <div className="pointer-events-none absolute left-0 right-0 top-0 z-30 flex items-center justify-between px-6 py-6 md:px-8 md:py-[26px]">
+        <div className="font-mono text-[13px] font-medium uppercase leading-none tracking-[.22em] text-fg/90">
+          Evan Zhang
+        </div>
+        <div className="pointer-events-auto hidden gap-[26px] font-mono text-[12px] uppercase leading-none tracking-[.16em] text-fg/60 sm:flex">
+          {nav.map((n) => (
+            <a key={n.href} href={n.href} className="transition-colors hover:text-accent">
+              {n.label}
+            </a>
+          ))}
         </div>
       </div>
 
-      <div className="container mx-auto px-6 py-12 max-w-4xl min-h-[350px]">
-        <div className="flex justify-between mb-6">
-          {info.map(item => {
-            const isActive = item.id === activeId
-            return (
-              <button
-                key={item.id}
-                onClick={() => setActiveId(item.id)}
-                className={`
-                  flex-1 text-center px-4 pb-2 font-medium transition
-                  ${isActive
-                    ? 'text-fg border-b-2 border-accent'
-                    : 'text-fg/40 hover:text-fg'}
-                `}
-              >
-                {item.label}
-              </button>
-            )
-          })}
-        </div>
-        <div className="text-fg text-base leading-relaxed">
-          {info.map(item =>
-            item.id === activeId ? <p key={item.id}>{item.desc}</p> : null
-          )}
-        </div>
+      <div className="pointer-events-none absolute left-6 right-6 top-[110px] z-30 max-w-[520px] md:left-8 md:right-auto md:top-[130px]">
+        <h1 className="font-serif text-[44px] font-light leading-[1.02] tracking-[-0.03em] text-white [text-shadow:0_8px_40px_rgba(0,20,40,.6)] sm:text-[56px] md:text-[68px]">
+          Six years, one long lane.
+        </h1>
+        <p className="mt-[22px] max-w-[420px] text-[15px] leading-[1.7] text-fg/[.78] md:text-[16px]">
+          Computer science and statistics at the University of Virginia. Software
+          engineering, machine learning, and the unglamorous middle of the stack.
+          Swim down the lane to read the timeline.
+        </p>
       </div>
     </section>
   )

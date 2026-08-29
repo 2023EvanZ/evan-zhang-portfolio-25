@@ -1,22 +1,31 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Newsreader, Archivo, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-import ProgressBar from "../../components/ProgressBar"
+import ProgressBar from "../../components/ProgressBar";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const newsreader = Newsreader({
+  variable: "--font-newsreader",
   subsets: ["latin"],
+  weight: ["300", "400", "500"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const archivo = Archivo({
+  variable: "--font-archivo",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains",
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
 });
 
 export const metadata: Metadata = {
   title: "Evan Zhang",
-  description: "This is Evan's portfolio website!",
+  description:
+    "Computer science and statistics student at the University of Virginia. Software engineering, machine learning, and the unglamorous middle of the stack.",
 };
 
 export default function RootLayout({
@@ -27,7 +36,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${newsreader.variable} ${archivo.variable} ${jetbrainsMono.variable} antialiased bg-bg text-fg`}
       >
         <ProgressBar />
 
