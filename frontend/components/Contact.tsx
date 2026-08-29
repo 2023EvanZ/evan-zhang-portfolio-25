@@ -45,9 +45,7 @@ export default function Contact() {
             Say hello.
           </h2>
           <p className="mt-5 max-w-[380px] text-[15px] leading-[1.8] text-fg/[.66] text-pretty md:text-[16px]">
-            Open to software engineering and machine learning internships and new-grad
-            roles, and always up for a conversation about a good problem. I reply
-            within a day or two.
+            Always happy to connect. Send a note and I&rsquo;ll get back to you.
           </p>
           <div className="mt-8 flex flex-wrap gap-[22px] font-mono text-[12px] uppercase leading-none tracking-[.14em] text-accent">
             {social.map((s) => (

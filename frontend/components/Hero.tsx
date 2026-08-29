@@ -7,7 +7,6 @@ import { milestones } from './siteData'
 const PoolWorld = dynamic(() => import('./PoolWorld'), { ssr: false })
 
 const nav = [
-  { label: 'Work', href: '#timeline' },
   { label: 'About', href: '#about' },
   { label: 'Projects', href: '#projects' },
   { label: 'Contact', href: '#contact' },
@@ -40,9 +39,10 @@ export default function Hero() {
           Six years, one long lane.
         </h1>
         <p className="mt-[22px] max-w-[420px] text-[15px] leading-[1.7] text-fg/[.78] md:text-[16px]">
-          Computer science and statistics at the University of Virginia. Software
-          engineering, machine learning, and the unglamorous middle of the stack.
-          Swim down the lane to read the timeline.
+          A master&rsquo;s in computer science at UVA, expected May 2027, on top
+          of two undergraduate degrees there &mdash; computer science and applied
+          statistics. Right now: agentic AI workflows at ChronoOS. Swim down the
+          lane to walk back through the work.
         </p>
       </div>
     </section>

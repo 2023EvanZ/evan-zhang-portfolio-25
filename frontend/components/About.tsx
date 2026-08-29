@@ -3,20 +3,22 @@ const blocks = [
     id: 'who',
     eyebrow: 'Who I am',
     lead:
-      'I got obsessed with the problem-solving side of computer science in my freshman year of high school, and I have essentially been chasing that same feeling ever since.',
+      'I got hooked on problem-solving freshman year of high school and never really got unhooked. Everything since has been some version of that same itch.',
     body: [
-      `Thomas Jefferson High School for Science and Technology first, then computer science and statistics at UVA. Along the way: data structures and algorithms, computer systems and organization, discrete math theory, software development essentials, software engineering, artificial intelligence, multivariable calculus, linear algebra, and probability. Databases, cloud computing, natural language processing, machine learning, and data analysis with Python are what's next.`,
-      `In practice that means Java, Python, JavaScript, TypeScript, R, C/C++, and SQL, with React, React Native, Angular, Django, Flask, Next.js, TensorFlow, the Android and iOS SDKs, MongoDB, Bootstrap, and Tailwind on top of them. Over half a decade of writing programs, and the useful part has been learning which of those tools to leave in the bag.`,
+      `Thomas Jefferson High School for Science and Technology first, then UVA, where I finished two bachelor's degrees — computer science and applied statistics — in May 2026 with a 3.9. I'm still there now, working on a master's in computer science that should wrap up May 2027.`,
+      `The coursework is behind me rather than ahead of me at this point: data structures and algorithms, artificial intelligence, machine learning, natural language processing, probability, linear algebra, and data analysis with Python. Grad school is where it stops being a syllabus and starts being a question you have to pick yourself.`,
+      `Right now that means three things. I'm doing research on autonomous driving systems — the datasets and the safety-critical scenarios that break them. I'm building agentic workflows, which is also what I do at ChronoOS, so the research and the job keep feeding each other. And I'm working through systems and data center architecture at the graduate level, because I want to actually understand the machines underneath everything I've been writing on top of.`,
     ],
   },
   {
     id: 'drives',
     eyebrow: 'What drives me',
     lead:
-      'Growth takes time and it has to be consistent. My ceiling should be somebody else’s starting point.',
+      'I want the things I build to matter to somebody. Clever is easy to come by; useful is the harder and more interesting target.',
     body: [
-      `I care about building things with cutting-edge technology that actually make someone's life better, and about writing down what worked and what did not so the people coming up behind me do not have to rediscover it. That is most of why I document the journey at all.`,
-      `Away from a keyboard I run, I swim, I play volleyball, and I read a lot of self-improvement books — which is really just the same instinct pointed somewhere else. When I can, I travel; the trips where the nature is genuinely stunning are the ones that stay with me.`,
+      `Impact is the point. I'd rather ship something a real person depends on than something that only looks good in a demo, and that preference has shaped basically every project I've picked up. It's also why I like the unglamorous parts — the test suite, the pipeline, the thing that quietly stops breaking.`,
+      `Past that, I'm trying to stay a lifelong learner, personally and professionally. I don't think I'll ever be finished, and I've made peace with that. The fastest growth I've had has always come right after admitting I didn't understand something.`,
+      `And I take ownership of what I put my name on. If I built it, I'm the one who chases the bug at 11pm, writes the doc nobody asked for, and follows the fix all the way into production. That's not heroics, it's just the deal — the work is mine until it's genuinely done.`,
     ],
   },
 ]

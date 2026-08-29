@@ -375,7 +375,21 @@ export default function PoolWorld({ milestones }: { milestones: Milestone[] }) {
 
       let raf = 0
       let frame = 0
+      let running = false
+      let onScreen = true
+
+      const start = () => {
+        if (running) return
+        running = true
+        raf = requestAnimationFrame(loop)
+      }
+      const stop = () => {
+        running = false
+        cancelAnimationFrame(raf)
+      }
+
       const loop = (t: number) => {
+        if (!running) return
         raf = requestAnimationFrame(loop)
         const time = t * 0.001
         progress += (target - progress) * 0.07
@@ -423,10 +437,35 @@ export default function PoolWorld({ milestones }: { milestones: Milestone[] }) {
         if (knobRef.current) knobRef.current.style.top = progress * 100 + '%'
         renderer.render(scene, camera)
       }
-      raf = requestAnimationFrame(loop)
+      /*
+        Only animate while the hero is actually on screen and the tab is
+        visible. The per-frame work here is heavy (surface ripple, 700 bubbles,
+        a regenerated caustic texture); left running under the rest of the page
+        it burns battery and starves the main thread badly enough that lazily
+        loaded images further down never get a chance to decode.
+      */
+      const io = new IntersectionObserver(
+        ([e]) => {
+          onScreen = e.isIntersecting
+          if (onScreen && !document.hidden) start()
+          else stop()
+        },
+        { threshold: 0 }
+      )
+      io.observe(host)
+
+      const onVisibility = () => {
+        if (document.hidden) stop()
+        else if (onScreen) start()
+      }
+      document.addEventListener('visibilitychange', onVisibility)
+
+      start()
 
       cleanup = () => {
-        cancelAnimationFrame(raf)
+        stop()
+        io.disconnect()
+        document.removeEventListener('visibilitychange', onVisibility)
         ro.disconnect()
         host.removeEventListener('wheel', onWheel)
         host.removeEventListener('pointerdown', onPointerDown)

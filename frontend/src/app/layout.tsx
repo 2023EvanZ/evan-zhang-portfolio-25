@@ -25,7 +25,7 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Evan Zhang",
   description:
-    "Computer science and statistics student at the University of Virginia. Software engineering, machine learning, and the unglamorous middle of the stack.",
+    "Master's student in computer science at UVA, with undergraduate degrees in computer science and applied statistics. Software engineer at ChronoOS, previously Wells Fargo and GEICO.",
 };
 
 export default function RootLayout({
